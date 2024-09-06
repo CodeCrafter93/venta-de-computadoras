@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import TaskList from './TaskList';
+import TaskForm from './TaskForm';
 
 function App() {
+  // Estado para manejar las tareas
+  const [tasks, setTasks] = useState([]);
+
+  // Función para agregar una nueva tarea
+  const addTask = (task) => {
+    setTasks([...tasks, task]);
+  };
+
+  // Función para actualizar el estado de una tarea
+  const updateTaskStatus = (id, newStatus) => {
+    setTasks(tasks.map(task => 
+      task.id === id ? { ...task, status: newStatus } : task
+    ));
+  };
+
+  // Función para eliminar una tarea
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Gestión de backlog</h1>
+      <TaskForm addTask={addTask} />
+      <TaskList tasks={tasks} updateTaskStatus={updateTaskStatus} deleteTask={deleteTask} />
     </div>
   );
 }
