@@ -1,35 +1,30 @@
+// src/App.js
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import ProductList from './ProductList';
 import Cart from './Cart';
 
-function App() {
-  const [products, setProducts] = useState([
-    { id: 1, name: 'Laptop', price: 1000 },
-    { id: 2, name: 'Monitor', price: 300 },
-    // Agrega más productos según sea necesario
-  ]);
-  const [cart, setCart] = useState([]);
+const App = () => {
+  const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (product) => {
-    setCart([...cart, product]);
+    setCartItems((prevItems) => [...prevItems, product]);
+  };
+
+  const removeFromCart = (productId) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
   };
 
   return (
-    <Router>
-      <div className="App">
-        <nav>
-          <Link to="/">Productos</Link>
-          <Link to="/cart">Carrito</Link>
-        </nav>
-        <Routes>
-          <Route path="/" element={<ProductList products={products} addToCart={addToCart} />} />
-          <Route path="/cart" element={<Cart cart={cart} />} />
-        </Routes>
-      </div>
-    </Router>
+    <div>
+      <h1 style={{ textAlign: 'center', fontFamily: 'Arial, sans-serif', padding: '20px' }}>
+        TecnoPC
+      </h1>
+      <ProductList addToCart={addToCart} />
+      <Cart cartItems={cartItems} removeFromCart={removeFromCart} />
+    </div>
   );
-}
+};
 
 export default App;
+
 
