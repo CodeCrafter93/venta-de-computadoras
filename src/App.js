@@ -1,35 +1,35 @@
 import React, { useState } from 'react';
-import TaskList from './TaskList';
-import TaskForm from './TaskForm';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import ProductList from './ProductList';
+import Cart from './Cart';
 
 function App() {
-  // Estado para manejar las tareas
-  const [tasks, setTasks] = useState([]);
+  const [products, setProducts] = useState([
+    { id: 1, name: 'Laptop', price: 1000 },
+    { id: 2, name: 'Monitor', price: 300 },
+    // Agrega más productos según sea necesario
+  ]);
+  const [cart, setCart] = useState([]);
 
-  // Función para agregar una nueva tarea
-  const addTask = (task) => {
-    setTasks([...tasks, task]);
-  };
-
-  // Función para actualizar el estado de una tarea
-  const updateTaskStatus = (id, newStatus) => {
-    setTasks(tasks.map(task => 
-      task.id === id ? { ...task, status: newStatus } : task
-    ));
-  };
-
-  // Función para eliminar una tarea
-  const deleteTask = (id) => {
-    setTasks(tasks.filter(task => task.id !== id));
+  const addToCart = (product) => {
+    setCart([...cart, product]);
   };
 
   return (
-    <div className="App">
-      <h1>Gestión de backlog</h1>
-      <TaskForm addTask={addTask} />
-      <TaskList tasks={tasks} updateTaskStatus={updateTaskStatus} deleteTask={deleteTask} />
-    </div>
+    <Router>
+      <div className="App">
+        <nav>
+          <Link to="/">Productos</Link>
+          <Link to="/cart">Carrito</Link>
+        </nav>
+        <Routes>
+          <Route path="/" element={<ProductList products={products} addToCart={addToCart} />} />
+          <Route path="/cart" element={<Cart cart={cart} />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
 export default App;
+
