@@ -1,24 +1,59 @@
 // src/ProductList.js
-import React from 'react';
+import React, { useState } from 'react';
 
-// Componente que muestra una lista de productos
-const ProductList = () => {
+const ProductList = ({ addToCart }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [category, setCategory] = useState('all');
+  const [sortOrder, setSortOrder] = useState('asc');
+
   const products = [
-    { id: 1, name: 'Computadora gamer', price: 1500, imageUrl: 'https://via.placeholder.com/150' },
-    { id: 2, name: 'Laptop para trabajo', price: 1200, imageUrl: 'https://via.placeholder.com/150' },
-    { id: 3, name: 'Computadora All-in-one', price: 1000, imageUrl: 'https://via.placeholder.com/150' },
+    { id: 1, name: 'Computadora gamer', price: 12500, category: 'computadoras', rating: 4, imageUrl: 'https://via.placeholder.com/150' },
+    { id: 2, name: 'Laptop para trabajo', price: 7500, category: 'laptops', rating: 5, imageUrl: 'https://via.placeholder.com/150' },
+    { id: 3, name: 'Computadora All-in-one', price: 8000, category: 'computadoras', rating: 3, imageUrl: 'https://via.placeholder.com/150' },
   ];
+
+  const filteredProducts = products
+    .filter((product) => 
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (category === 'all' || product.category === category)
+    )
+    .sort((a, b) => (sortOrder === 'asc' ? a.price - b.price : b.price - a.price));
 
   return (
     <div style={styles.container}>
       <h2 style={styles.title}>Productos disponibles</h2>
+
+      <input
+        type="text"
+        placeholder="Buscar productos..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={styles.searchBar}
+      />
+
+      <select onChange={(e) => setCategory(e.target.value)} style={styles.filterDropdown}>
+        <option value="all">Todas las categorías</option>
+        <option value="computadoras">Computadoras</option>
+        <option value="laptops">Laptops</option>
+      </select>
+
+      <select onChange={(e) => setSortOrder(e.target.value)} style={styles.filterDropdown}>
+        <option value="asc">Precio: Menor a mayor</option>
+        <option value="desc">Precio: Mayor a menor</option>
+      </select>
+
       <div style={styles.productGrid}>
-        {products.map((product) => (
+        {filteredProducts.map((product) => (
           <div key={product.id} style={styles.productCard}>
             <img src={product.imageUrl} alt={product.name} style={styles.productImage} />
             <h3 style={styles.productName}>{product.name}</h3>
             <p style={styles.productPrice}>${product.price}</p>
-            <button style={styles.buyButton}>Comprar</button>
+            <div style={styles.rating}>
+              {'★'.repeat(product.rating)}{'☆'.repeat(5 - product.rating)}
+            </div>
+            <button style={styles.buyButton} onClick={() => addToCart(product)}>
+              Comprar
+            </button>
           </div>
         ))}
       </div>
@@ -26,7 +61,6 @@ const ProductList = () => {
   );
 };
 
-// Estilos CSS en línea
 const styles = {
   container: {
     display: 'flex',
@@ -39,6 +73,23 @@ const styles = {
     fontSize: '24px',
     fontWeight: 'bold',
     marginBottom: '20px',
+  },
+  searchBar: {
+    padding: '8px',
+    fontSize: '16px',
+    width: '100%',
+    maxWidth: '400px',
+    marginBottom: '10px',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
+  },
+  filterDropdown: {
+    padding: '8px',
+    fontSize: '16px',
+    marginBottom: '10px',
+    marginRight: '10px',
+    borderRadius: '4px',
+    border: '1px solid #ddd',
   },
   productGrid: {
     display: 'grid',
@@ -73,6 +124,11 @@ const styles = {
     color: '#888',
     marginBottom: '10px',
   },
+  rating: {
+    fontSize: '16px',
+    color: 'gold',
+    marginBottom: '10px',
+  },
   buyButton: {
     padding: '8px 16px',
     fontSize: '16px',
@@ -86,3 +142,4 @@ const styles = {
 };
 
 export default ProductList;
+

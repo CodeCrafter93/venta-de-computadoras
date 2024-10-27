@@ -2,7 +2,7 @@
 import React from 'react';
 
 // Componente que muestra el carrito de compras
-const Cart = ({ cartItems, removeFromCart }) => {
+const Cart = ({ cartItems = [], removeFromCart }) => {
   return (
     <div style={styles.container}>
       <h2 style={styles.title}>Carrito de compras</h2>
