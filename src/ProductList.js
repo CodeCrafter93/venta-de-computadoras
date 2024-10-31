@@ -51,7 +51,10 @@ const ProductList = ({ addToCart }) => {
             <div style={styles.rating}>
               {'★'.repeat(product.rating)}{'☆'.repeat(5 - product.rating)}
             </div>
-            <button style={styles.buyButton} onClick={() => addToCart(product)}>
+            <button style={styles.buyButton} onClick={() => {
+              console.log("Producto seleccionado:", product);
+              addToCart(product);
+            }}>
               Comprar
             </button>
           </div>
@@ -61,6 +64,7 @@ const ProductList = ({ addToCart }) => {
   );
 };
 
+// Estilos
 const styles = {
   container: {
     display: 'flex',
@@ -142,4 +146,3 @@ const styles = {
 };
 
 export default ProductList;
-

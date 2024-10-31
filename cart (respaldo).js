@@ -1,12 +1,11 @@
 // src/Cart.js
 import React from 'react';
-import { Link } from 'react-router-dom';
 
+// Componente que muestra el carrito de compras
 const Cart = ({ cartItems = [], removeFromCart }) => {
   return (
     <div style={styles.container}>
       <h2 style={styles.title}>Carrito de compras</h2>
-      
       <div style={styles.cartGrid}>
         {cartItems.length === 0 ? (
           <p style={styles.emptyMessage}>Tu carrito está vacío</p>
@@ -25,16 +24,11 @@ const Cart = ({ cartItems = [], removeFromCart }) => {
           ))
         )}
       </div>
-      
-      <Link to="/" style={styles.backButton}>Regresar a los productos</Link>
-      
-      {cartItems.length > 0 && (
-        <Link to="/checkout" style={styles.checkoutButton}>Proceder al pago</Link>
-      )}
     </div>
   );
 };
 
+// Estilos CSS en línea
 const styles = {
   container: {
     display: 'flex',
@@ -97,26 +91,7 @@ const styles = {
     borderRadius: '4px',
     cursor: 'pointer',
   },
-  backButton: {
-    marginTop: '20px',
-    padding: '10px 20px',
-    fontSize: '16px',
-    color: '#fff',
-    backgroundColor: '#007bff',
-    textDecoration: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
-  checkoutButton: {
-    marginTop: '10px',
-    padding: '10px 20px',
-    fontSize: '16px',
-    color: '#fff',
-    backgroundColor: '#28a745',
-    textDecoration: 'none',
-    borderRadius: '4px',
-    cursor: 'pointer',
-  },
 };
 
 export default Cart;
+
