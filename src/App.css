@@ -1,23 +1,33 @@
-/* Estilo principal para la aplicación */
+/* src/App.css */
+
+/* Estilo base */
 .App {
   text-align: center;
   font-family: Arial, sans-serif;
   padding: 20px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-/* Encabezado principal */
-.App-header {
+/* Modo claro */
+.light-mode {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.light-mode .App-header {
   background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-/* Título "TecnoPC" */
+/* Modo oscuro */
+.dark-mode {
+  background-color: #181818;
+  color: #ddd;
+}
+
+.dark-mode .App-header {
+  background-color: #333;
+}
+
 .TecnoPC-title {
   text-align: center;
   padding: 20px;
@@ -157,4 +167,3 @@
 .remove-button:hover {
   background-color: #d9363e;
 }
-

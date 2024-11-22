@@ -4,23 +4,16 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import ProductList from './ProductList';
 import Cart from './Cart';
 import Checkout from './Checkout';
-import Notification from './Notification';
 
 const App = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [notification, setNotification] = useState('');
 
   const addToCart = (product) => {
     setCartItems((prevItems) => [...prevItems, product]);
-    setNotification(`"${product.name}" se ha añadido al carrito.`);
-    setTimeout(() => setNotification(''), 3000);
   };
 
   const removeFromCart = (productId) => {
-    const removedItem = cartItems.find((item) => item.id === productId); // Encuentra el producto eliminado
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
-    setNotification(`"${removedItem?.name}" se ha eliminado del carrito.`); // Mensaje de confirmación
-    setTimeout(() => setNotification(''), 3000);
   };
 
   const clearCart = () => {
@@ -34,9 +27,6 @@ const App = () => {
           <h1 style={styles.title}>TecnoPC</h1>
           <Link to="/cart" style={styles.cartLink}>Carrito ({cartItems.length})</Link>
         </header>
-
-        {/* Mostramos la notificación si hay un mensaje */}
-        {notification && <Notification message={notification} />}
 
         <Routes>
           <Route path="/" element={<ProductList addToCart={addToCart} />} />
